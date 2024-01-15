@@ -1,13 +1,3 @@
-<?php
-require "./DisplayImg.php";
-$images = DisplayImg("./ImgFile");
-
-if ($images === null) {
-    include "upload-form.php";
-    exit;
-}
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,29 +43,20 @@ if ($images === null) {
             </div>
             <input type="submit" value="Upload Image" name="submit" class="bg-purple-500 p-3 rounded-md text-white hover:bg-purple-600 cursor-pointer">
         </form>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-10">
-            <?php foreach ($images as $image) : ?>
-                <div class="grid gap-4">
-                    <div>
-                        <img src=<?php echo $image; ?> alt="" class="h-auto max-w-full rounded-lg">
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
+    </main>
+    <script>
+        document.getElementById('fileToUpload').addEventListener('change', function() {
+            var files = this.files;
+            var fileList = document.querySelector('.custom-file-input label');
 
-        <script>
-            document.getElementById('fileToUpload').addEventListener('change', function() {
-                var files = this.files;
-                var fileList = document.querySelector('.custom-file-input label');
-
-                // Display the number of files selected
-                if (files.length === 1) {
-                    fileList.innerText = '1 file selected';
-                } else {
-                    fileList.innerText = files.length + ' files selected';
-                }
-            });
-        </script>
+            // Display the number of files selected
+            if (files.length === 1) {
+                fileList.innerText = '1 file selected';
+            } else {
+                fileList.innerText = files.length + ' files selected';
+            }
+        });
+    </script>
 </body>
 
 </html>
