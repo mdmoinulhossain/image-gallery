@@ -10,7 +10,8 @@ if (!empty($_FILES['file-upload']['tmp_name'][0])) {
     for ($i = 0; $i < count($files['name']); $i++) {
         $uploadedFile = $files['tmp_name'][$i];
         $originalFilename = $files['name'][$i];
-        $destination = $uploadDirectory . $originalFilename;
+        $currentDateTime = date("Y-m-d--H-i-s"); // For Unique name
+        $destination = $uploadDirectory . $originalFilename . $currentDateTime;
 
         $typeAllowed = ['image/jpg', 'image/jpeg', 'image/png'];
 
