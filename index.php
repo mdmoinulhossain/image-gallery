@@ -51,6 +51,12 @@ $images = DisplayImg("./ImgFile");
         <form action="./uploadImg.php" method="post" enctype="multipart/form-data" class="border-b-2 border-purple-500 flex justify-between items-center gap-x-1 pb-2">
             <div>
                 <?php
+                if (isset($_GET['file'])) {
+                    $imageToShow = $_GET['file'];
+                    echo "<h3 class='text-green-700 text-lg successMessage'>File uploaded successfully!</h3>";
+                }
+                ?>
+                <?php
                 if (isset($_GET['success'])) {
                     $imageToDelete = $_GET['success'];
                     echo "<h3 class='text-red-700 text-lg successMessage'>$imageToDelete</h3>";

@@ -3,6 +3,8 @@
 // ******************** Multi File Upload ****************************
 $uploadDirectory = './ImgFile/';
 
+$homePage = './index.php';
+
 if (!empty($_FILES['file-upload']['tmp_name'][0])) {
     $files = $_FILES['file-upload'];
 
@@ -30,6 +32,8 @@ if (!empty($_FILES['file-upload']['tmp_name'][0])) {
         // Move the uploaded file
         if (move_uploaded_file($uploadedFile, $destination)) {
             echo "File $originalFilename uploaded successfully.<br/>";
+            // Redirect to home page after 1 second with success query parameter
+            header("Refresh: 1; URL=$homePage?file=$originalFilename");
         } else {
             echo "Error uploading file $originalFilename.<br/>";
         }
