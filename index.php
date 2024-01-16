@@ -3,10 +3,9 @@ require "./DisplayImg.php";
 $images = DisplayImg("./ImgFile");
 
 if ($images === null) {
-    include "upload-form.php";
+    echo "Image Not found!";
     exit;
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,18 +44,29 @@ if ($images === null) {
 
 <body>
     <main class="px-5 my-5">
-        <form action="./uploadImg.php" method="post" enctype="multipart/form-data" class="border-b-2 border-purple-500 flex justify-end items-center gap-x-1 pb-2">
-            <strong class="text-purple-800">Select image to upload: </strong>
-            <div class="custom-file-input cursor-pointer">
-                <input type="file" name="file-upload[]" id="fileToUpload" multiple>
-                <label for="fileToUpload">Choose File</label>
+        <form action="./uploadImg.php" method="post" enctype="multipart/form-data" class="border-b-2 border-purple-500 flex justify-between items-center gap-x-1 pb-2">
+            <div>
+                <?php
+                if (isset($_GET['success'])) {
+                    $imageToDelete = $_GET['success'];
+                    echo "<h3 class='text-red-700 text-lg successMessage'>$imageToDelete</h3>";
+                }
+                ?>
             </div>
-            <input type="submit" value="Upload Image" name="submit" class="bg-purple-500 p-3 rounded-md text-white hover:bg-purple-600 cursor-pointer">
+            <div>
+                <strong class="text-purple-800">Select image to upload: </strong>
+                <div class="custom-file-input cursor-pointer">
+                    <input type="file" name="file-upload[]" id="fileToUpload" multiple>
+                    <label for="fileToUpload">Choose File</label>
+                </div>
+                <input type="submit" value="Upload Image" name="submit" class="bg-purple-500 p-3 rounded-md text-white hover:bg-purple-600 cursor-pointer">
+            </div>
         </form>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-10">
             <?php foreach ($images as $image) : ?>
                 <div class="grid gap-4">
                     <div>
+                        <a class="delete-btn" href="./delete.php?delete_image=<?php echo urlencode(basename($image)); ?>">Delete</a>
                         <img src=<?php echo $image; ?> alt="" class="h-auto max-w-full rounded-lg">
                     </div>
                 </div>
@@ -76,6 +86,8 @@ if ($images === null) {
                 }
             });
         </script>
+
+        <script src="./script.js"></script>
 </body>
 
 </html>

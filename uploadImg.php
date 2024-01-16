@@ -11,7 +11,7 @@ if (!empty($_FILES['file-upload']['tmp_name'][0])) {
         $uploadedFile = $files['tmp_name'][$i];
         $originalFilename = $files['name'][$i];
         $currentDateTime = date("Y-m-d--H-i-s"); // For Unique name
-        $destination = $uploadDirectory . $originalFilename . $currentDateTime;
+        $destination = $uploadDirectory . $currentDateTime . $originalFilename;
 
         $typeAllowed = ['image/jpg', 'image/jpeg', 'image/png'];
 
