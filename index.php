@@ -2,10 +2,6 @@
 require "./DisplayImg.php";
 $images = DisplayImg("./ImgFile");
 
-if ($images === null) {
-    echo "Image Not found!";
-    exit;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +35,14 @@ if ($images === null) {
             border-radius: 5px;
             cursor: pointer;
         }
+
+        .displayMessage {
+            font-size: 22px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     </style>
 </head>
 
@@ -62,16 +66,27 @@ if ($images === null) {
                 <input type="submit" value="Upload Image" name="submit" class="bg-purple-500 p-3 rounded-md text-white hover:bg-purple-600 cursor-pointer">
             </div>
         </form>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-10">
-            <?php foreach ($images as $image) : ?>
-                <div class="grid gap-4">
-                    <div>
-                        <a class="delete-btn" href="./delete.php?delete_image=<?php echo urlencode(basename($image)); ?>">Delete</a>
-                        <img src=<?php echo $image; ?> alt="" class="h-auto max-w-full rounded-lg">
+
+        <?php
+        // Check if the array is empty
+        if (empty($images)) {
+            echo "<h2 class='displayMessage'>No Image In Folder!</h2>";
+        }
+
+        ?>
+        <?php if (!empty($images)) : ?>
+            <!-- Display images and form -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-10">
+                <?php foreach ($images as $image) : ?>
+                    <div class="grid gap-4">
+                        <div>
+                            <a class="delete-btn" href="./delete.php?delete_image=<?php echo urlencode(basename($image)); ?>">Delete</a>
+                            <img src=<?php echo $image; ?> alt="" class="h-auto max-w-full rounded-lg">
+                        </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
         <script>
             document.getElementById('fileToUpload').addEventListener('change', function() {
@@ -85,9 +100,14 @@ if ($images === null) {
                     fileList.innerText = files.length + ' files selected';
                 }
             });
-        </script>
 
-        <script src="./script.js"></script>
+            setTimeout(function() {
+                var successDiv = document.querySelector(".successMessage");
+                if (successDiv) {
+                    successDiv.style.display = "none";
+                }
+            }, 2000);
+        </script>
 </body>
 
 </html>
