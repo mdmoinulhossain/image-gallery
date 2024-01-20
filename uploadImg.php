@@ -33,7 +33,12 @@ if (!empty($_FILES['file-upload']['tmp_name'][0])) {
         if (move_uploaded_file($uploadedFile, $destination)) {
             echo "File $originalFilename uploaded successfully.<br/>";
             // Redirect to home page after 1 second with success query parameter
-            header("Refresh: 1; URL=$homePage?file=$originalFilename");
+            // header("Refresh: 1; URL=$homePage?file=$originalFilename");
+            echo "<script>
+            setTimeout(function(){
+                window.location.href = '$homePage';
+            }, 2000);
+        </script>";
         } else {
             echo "Error uploading file $originalFilename.<br/>";
         }
